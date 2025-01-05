@@ -26,8 +26,9 @@ public class Network {
      *  If there is no such user, returns null.
      *  Notice that the method receives a String, and returns a User object. */
     public User getUser(String name) {
-        char c = (char) (name.charAt(0) - 32);
-        name = c + name.substring(1);
+        if (name.charAt(0) >= 97 && name.charAt(0) <= 122) {
+            name = (char) (name.charAt(0) - 32) + name.substring(1);
+        }
         for (int i = 0; i < userCount; i++) {
             if(users[i].getName().equals(name)) {
                 return users[i];
@@ -45,8 +46,9 @@ public class Network {
     *  If the given name is already a user in this network, does nothing and returns false;
     *  Otherwise, creates a new user with the given name, adds the user to this network, and returns true. */
     public boolean addUser(String name) {
-        char c = (char) (name.charAt(0) - 32);
-        name = c + name.substring(1);
+        if (name.charAt(0) >= 97 && name.charAt(0) <= 122) {
+            name = (char) (name.charAt(0) - 32) + name.substring(1);
+        }
         if (userCount == users.length) {
             System.out.println("No more room to add users");
             return false;
@@ -66,10 +68,12 @@ public class Network {
      *  If any of the two names is not a user in this network,
      *  or if the "follows" addition failed for some reason, returns false. */
     public boolean addFollowee(String name1, String name2) {
-        char c = (char) (name1.charAt(0) - 32);
-        name1 = c + name1.substring(1);
-        char c1 = (char) (name2.charAt(0) - 32);
-        name2 = c1 + name2.substring(1);
+        if (name1.charAt(0) >= 97 && name1.charAt(0) <= 122) {
+            name1 = (char) (name1.charAt(0) - 32) + name1.substring(1);
+        }
+        if (name2.charAt(0) >= 97 && name2.charAt(0) <= 122) {
+            name2 = (char) (name2.charAt(0) - 32) + name2.substring(1);
+        }
         if (getUser(name1) != null && getUser(name2) != null) {
             getUser(name1).addFollowee(name2);
             return true;
@@ -80,8 +84,9 @@ public class Network {
     /** For the user with the given name, recommends another user to follow. The recommended user is
      *  the user that has the maximal mutual number of followees as the user with the given name. */
     public String recommendWhoToFollow(String name) {
-        char c = (char) (name.charAt(0) - 32);
-        name = c + name.substring(1);
+        if (name.charAt(0) >= 97 && name.charAt(0) <= 122) {
+            name = (char) (name.charAt(0) - 32) + name.substring(1);
+        }
         User thisUser = getUser(name);
         int maxMutualFollowees = 0;
         int count = 0;
@@ -119,8 +124,9 @@ public class Network {
     /** Returns the number of times that the given name appears in the follows lists of all
      *  the users in this network. Note: A name can appear 0 or 1 times in each list. */
     public int followeeCount(String name) {
-        char c = (char) (name.charAt(0) - 32);
-        name = c + name.substring(1);
+        if (name.charAt(0) >= 97 && name.charAt(0) <= 122) {
+            name = (char) (name.charAt(0) - 32) + name.substring(1);
+        }
         int count = 0;
         for (int i = 0; i < userCount; i++) {
             if(users[i].follows(name)) {

@@ -43,8 +43,9 @@
 
     /** If this user follows the given name, returns true; otherwise returns false. */
     public boolean follows(String name) {
-        char c = (char) (name.charAt(0) - 32);
-        name = c + name.substring(1);
+        if (name.charAt(0) >= 97 && name.charAt(0) <= 122) {
+            name = (char) (name.charAt(0) - 32) + name.substring(1);
+        }
         for (int i = 0; i < fCount; i++) {
             if (this.follows[i] != null && this.follows[i].equals(name)) {
                 return true;
@@ -55,8 +56,9 @@
     /** Makes this user follow the given name. If successful, returns true. 
      *  If this user already follows the given name, or if the follows list is full, does nothing and returns false; */
     public boolean addFollowee(String name) {
-        char c = (char) (name.charAt(0) - 32);
-        name = c + name.substring(1);
+        if (name.charAt(0) >= 97 && name.charAt(0) <= 122) {
+            name = (char) (name.charAt(0) - 32) + name.substring(1);
+        }
         if (fCount == maxfCount) {
             System.out.println("No more room to add followees");
             return false;
@@ -75,8 +77,9 @@
     /** Removes the given name from the follows list of this user. If successful, returns true.
      *  If the name is not in the list, does nothing and returns false. */
     public boolean removeFollowee(String name) {
-        char c = (char) (name.charAt(0) - 32);
-        name = c + name.substring(1);
+        if (name.charAt(0) >= 97 && name.charAt(0) <= 122) {
+            name = (char) (name.charAt(0) - 32) + name.substring(1);
+        }
         if (!follows(name)) {
             System.out.println("This user is is not following that user!");
             return false;

@@ -81,7 +81,9 @@
             name = (char) (name.charAt(0) - 32) + name.substring(1);
         }
         if (!follows(name)) {
-            System.out.println("This user is is not following that user!");
+            return false;
+        }
+        if (fCount == 0) {
             return false;
         }
         for(int i = 0; i < fCount; i++) {

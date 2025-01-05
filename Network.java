@@ -49,6 +49,9 @@ public class Network {
         if (name.charAt(0) >= 97 && name.charAt(0) <= 122) {
             name = (char) (name.charAt(0) - 32) + name.substring(1);
         }
+        if (getUser(name) == null) {
+            return false;
+        }
         if (userCount == users.length) {
             System.out.println("No more room to add users");
             return false;
@@ -73,6 +76,15 @@ public class Network {
         }
         if (name2.charAt(0) >= 97 && name2.charAt(0) <= 122) {
             name2 = (char) (name2.charAt(0) - 32) + name2.substring(1);
+        }
+        if (getUser(name1) == null || getUser(name2) == null) {
+            return false;
+        }
+        if (name1.equals(name2)) {
+            return false;
+        }
+        if(getUser(name1).follows(name2)) {
+            return false;
         }
         if (getUser(name1) != null && getUser(name2) != null) {
             getUser(name1).addFollowee(name2);
@@ -138,9 +150,9 @@ public class Network {
 
     // Returns a textual description of all the users in this network, and who they follow.
     public String toString() {
-        String ans = "Network:\n";
+        String ans = "Network:";
         for (int i = 0; i < userCount; i++) {
-            ans = ans + users[i] + " \n";
+            ans = "\n" + ans + users[i];
         }
         return ans;
     }

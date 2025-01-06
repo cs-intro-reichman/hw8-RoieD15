@@ -51,7 +51,7 @@ public class Network {
             return false;
         }
         for (int i = 0; i < userCount; i++) {
-            if(users[i].getName().equals(name)) {
+            if(users[i].getName().toLowerCase().equals(name.toLowerCase())) {
                 System.out.println("This user is already in the network!");
                 return false;
             }

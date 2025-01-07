@@ -51,7 +51,6 @@ public class Network {
         }
         for (int i = 0; i < userCount; i++) {
             if(users[i].getName().toLowerCase().equals(name.toLowerCase())) {
-                System.out.println("This user is already in the network!");
                 return false;
             }
         }
@@ -70,34 +69,25 @@ public class Network {
         if (name1.equals(name2)) {
             return false;
         }
-        if(getUser(name1).follows(name2)) {
-            return false;
-        }
-        if (getUser(name1) != null && getUser(name2) != null) {
-            getUser(name1).addFollowee(name2);
-            return true;
-        }
-        return false;
+        return getUser(name1).addFollowee(name2);
     }
     
     /** For the user with the given name, recommends another user to follow. The recommended user is
      *  the user that has the maximal mutual number of followees as the user with the given name. */
     public String recommendWhoToFollow(String name) {
-        User thisUser = getUser(name);
-        int maxMutualFollowees = 0;
-        int count = 0;
-        String recommendedUserName = "";
+        int maxMutualFriends = -1;
+        User recUser = null;
         for (int i = 0; i < userCount; i++) {
-            if (users[i] == thisUser) {
+            if (users[i].getName() == name) {
                 continue;
             }
-            count = thisUser.countMutual(users[i]);
-            if(count > maxMutualFollowees) {
-                recommendedUserName = users[i].getName();
-                maxMutualFollowees = count;
+            int mutualFriends = users[i].countMutual(getUser(name));
+            if (mutualFriends > maxMutualFriends) {
+                maxMutualFriends = mutualFriends;
+                recUser = users[i];
             }
         }
-        return recommendedUserName;
+        return recUser.getName();
     }
 
     /** Computes and returns the name of the most popular user in this network: 
@@ -106,15 +96,15 @@ public class Network {
         if (userCount == 0) {
             return null;
         }
-        int maxFolloweesCountUser = 0;
-        int index = 0;
+        int maxFolloweesCountUser = -1;
+        User popularUser = null;
         for (int i = 0; i < userCount; i++) {
             if(followeeCount(users[i].getName()) > maxFolloweesCountUser) {
                 maxFolloweesCountUser = followeeCount(users[i].getName());
-                index = i;
+                popularUser = users[i];
             }
         }
-        return users[index].getName();
+        return popularUser.getName();
     }
 
     /** Returns the number of times that the given name appears in the follows lists of all

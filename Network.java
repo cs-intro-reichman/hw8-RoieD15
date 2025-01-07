@@ -43,7 +43,7 @@ public class Network {
     *  If the given name is already a user in this network, does nothing and returns false;
     *  Otherwise, creates a new user with the given name, adds the user to this network, and returns true. */
     public boolean addUser(String name) {
-        if (getUser(name) == null) {
+        if (name == null || getUser(name) == null) {
             return false;
         }
         if (userCount == users.length) {
@@ -63,6 +63,9 @@ public class Network {
      *  If any of the two names is not a user in this network,
      *  or if the "follows" addition failed for some reason, returns false. */
     public boolean addFollowee(String name1, String name2) {
+        if (name1 == null || name2 == null) {
+            return false;
+        }
         if (getUser(name1) == null || getUser(name2) == null) {
             return false;
         }
@@ -76,7 +79,7 @@ public class Network {
      *  the user that has the maximal mutual number of followees as the user with the given name. */
     public String recommendWhoToFollow(String name) {
         int maxMutualFriends = -1;
-        User recUser = null;
+        int index = -1;
         for (int i = 0; i < userCount; i++) {
             if (users[i].getName() == name) {
                 continue;
@@ -84,10 +87,10 @@ public class Network {
             int mutualFriends = users[i].countMutual(getUser(name));
             if (mutualFriends > maxMutualFriends) {
                 maxMutualFriends = mutualFriends;
-                recUser = users[i];
+                index = i;
             }
         }
-        return recUser.getName();
+        return users[index].getName();
     }
 
     /** Computes and returns the name of the most popular user in this network: 
@@ -97,14 +100,14 @@ public class Network {
             return null;
         }
         int maxFolloweesCountUser = -1;
-        User popularUser = null;
+        int index = -1;
         for (int i = 0; i < userCount; i++) {
             if(followeeCount(users[i].getName()) > maxFolloweesCountUser) {
                 maxFolloweesCountUser = followeeCount(users[i].getName());
-                popularUser = users[i];
+                index = i;
             }
         }
-        return popularUser.getName();
+        return users[index].getName();
     }
 
     /** Returns the number of times that the given name appears in the follows lists of all

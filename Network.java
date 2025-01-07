@@ -27,7 +27,7 @@ public class Network {
      *  Notice that the method receives a String, and returns a User object. */
     public User getUser(String name) {
         for (int i = 0; i < userCount; i++) {
-            if(users[i].getName().equals(name)) {
+            if(users[i].getName().toLowerCase().equals(name.toLowerCase())) {
                 return users[i];
             }
         }
@@ -47,7 +47,6 @@ public class Network {
             return false;
         }
         if (userCount == users.length) {
-            System.out.println("No more room to add users");
             return false;
         }
         for (int i = 0; i < userCount; i++) {
@@ -134,7 +133,7 @@ public class Network {
     public String toString() {
         String ans = "Network:";
         for (int i = 0; i < userCount; i++) {
-            ans = "\n" + ans + users[i];
+            ans += "\n" + users[i];
         }
         return ans;
     }

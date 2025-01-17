@@ -46,6 +46,6 @@ public class NetworkTest {
         System.out.println("\n...Finding the most popular user...");
         System.out.println("The most popular user is: " + net.mostPopularUser());
 
-        System.out.println("\nAll Network class tests completed.");
+        System.out.println("\nAll Network class tests completed.   ");
     }
 }
